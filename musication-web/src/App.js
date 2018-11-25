@@ -80,9 +80,8 @@ class App extends Component {
       <div className="App" >
         <header className="App-header">
           <h2>Musication</h2>
-          <p> You can upload mp3s below </p>
+          <p> You can upload mp3s here </p>
           <br></br>
-          <p>Pick a file</p>
           <input type="file" onChange={this.uploadFile}/>
         </header>
         <p>
