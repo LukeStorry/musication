@@ -134,6 +134,38 @@
 					"authSelections": "identityPoolAndUserPool"
 				}
 			}
+		},
+		"analyticsmusicationweb": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"Parameters": {
+					"appName": "musicationweb",
+					"roleName": "pinpointLambdaRolec33090ff",
+					"cloudWatchPolicyName": "cloudWatchPolicyc33090ff",
+					"pinpointPolicyName": "pinpointPolicyc33090ff",
+					"authPolicyName": "pinpoint_amplify_c33090ff",
+					"unauthPolicyName": "pinpoint_amplify_c33090ff",
+					"authRoleName": "musicationweb-20181125164603-authRole",
+					"unauthRoleName": "musicationweb-20181125164603-unauthRole",
+					"IAMPrefix": "991639282145"
+				}
+			}
+		},
+		"storagemp3s": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"Parameters": {
+					"bucketName": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
+					"authPolicyName": "s3_amplify_c639e6d8",
+					"unauthPolicyName": "s3_amplify_c639e6d8",
+					"authRoleName": "musicationweb-20181125164603-authRole",
+					"unauthRoleName": "musicationweb-20181125164603-unauthRole",
+					"authPermissions": "rw",
+					"unauthPermissions": ""
+				}
+			}
 		}
 	},
 	"Outputs": {

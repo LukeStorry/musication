@@ -1,0 +1,11 @@
+{
+    "appName": "musicationweb",
+    "roleName": "pinpointLambdaRolec33090ff",
+    "cloudWatchPolicyName": "cloudWatchPolicyc33090ff",
+    "pinpointPolicyName": "pinpointPolicyc33090ff",
+    "authPolicyName": "pinpoint_amplify_c33090ff",
+    "unauthPolicyName": "pinpoint_amplify_c33090ff",
+    "authRoleName": "musicationweb-20181125164603-authRole",
+    "unauthRoleName": "musicationweb-20181125164603-unauthRole",
+    "IAMPrefix": "991639282145"
+}
