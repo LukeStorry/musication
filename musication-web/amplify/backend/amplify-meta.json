@@ -1,0 +1,43 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "musicationweb-20181125164603-authRole",
+            "UnauthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "musicationweb-20181125164603-deployment",
+            "UnauthRoleName": "musicationweb-20181125164603-unauthRole",
+            "StackName": "musicationweb-20181125164603",
+            "StackId": "arn:aws:cloudformation:eu-west-1:991639282145:stack/musicationweb-20181125164603/9a04ff50-f0d1-11e8-9d10-02761942ff2c"
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/hosting/template.json",
+                "logicalId": "hostingS3AndCloudFront"
+            },
+            "lastPushTimeStamp": "2018-11-25T16:48:18.204Z",
+            "output": {
+                "S3BucketSecureURL": "https://musicationweb-20181125164655--hostingbucket.s3.amazonaws.com",
+                "WebsiteURL": "http://musicationweb-20181125164655--hostingbucket.s3-website-eu-west-1.amazonaws.com",
+                "Region": "eu-west-1",
+                "HostingBucketName": "musicationweb-20181125164655--hostingbucket"
+            },
+            "lastPushDirHash": "qVEzyTpLGsgj2Rngs8tIp3LMVsQ="
+        }
+    },
+    "auth": {
+        "cognito61b3b7b8": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/auth/cognito61b3b7b8-cloudformation-template.yml",
+                "logicalId": "authcognito61b3b7b8"
+            },
+            "lastPushTimeStamp": "2018-11-25T16:54:24.369Z"
+        }
+    }
+}
