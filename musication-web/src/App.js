@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
-import Amplify, {Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
-import {withAuthenticator,S3Album} from 'aws-amplify-react';
+import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
+import { withAuthenticator, S3Album } from 'aws-amplify-react';
 
 
 Amplify.configure(aws_exports);
@@ -40,15 +40,25 @@ const addMapping = `mutation createMapping($name:String! $description: String!) 
 }`
 
 class App extends Component {
-  uploadFile = (evt) => {
-    const file = evt.target.files[0];
+  constructor(props) {
+    super(props);
+    this.state = { file: null };
+
+    Storage.list('', { level: 'protected' })
+    .then(result => console.log(result));
+  }
+
+  chooseFile = (evt) => {
+    const chosen = evt.target.files[0];
+    this.setState({file: chosen});
+  }
+
+  uploadFile = () => {
+    const file = this.state.file;
+    if (file == null) { return; }
     const name = file.name;
 
-    Storage.put(name, file).then(() => {
-      this.setState({
-        file: name
-      });
-    })
+    Storage.put(name, file).then(this.setState({file: null}));
   }
 
   componentDidMount() {
@@ -82,7 +92,8 @@ class App extends Component {
           <h2>Musication</h2>
           <p> You can upload mp3s here </p>
           <br></br>
-          <input type="file" onChange={this.uploadFile}/>
+          <input type="file" onChange={this.chooseFile}/>
+          <button onClick={this.uploadFile}>Upload</button>
         </header>
         <p>
           <button onClick={this.listQuery}>Test - GraphQL List Query</button>

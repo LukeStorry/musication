@@ -1,5 +1,5 @@
 html, body {
-  background-color: #00B7EB;
+  background-color: #000;
 }
 .App {
   text-align: center;
@@ -11,7 +11,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #00AADD;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
