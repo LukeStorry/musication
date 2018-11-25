@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
 import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
-import { withAuthenticator, S3Album } from 'aws-amplify-react';
-import { FilePond, File, registerPlugin } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
-
+import { withAuthenticator } from 'aws-amplify-react';
 
 Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
@@ -52,19 +49,9 @@ class App extends Component {
     .then(result => console.log(result));
   }
 
-
-  // const pond = document.querySelector('.filepond--root');
-  // pond.addEventListener('FilePond:addfile', e => {
-  //     console.log('File added', e.detail);
-  // });
-//   pond.addEventListener('FilePond:addfile', e => {
-//     console.log('File added', e.detail);
-// });
-  handlePondFile = (err, chosenFile) => {
-    if (err) {
-      console.log(err);
-    }
-    this.setState({file: chosenFile});
+  chooseFile = (evt) => {
+    const chosen = evt.target.files[0];
+    this.setState({file: chosen});
   }
 
   uploadFile = () => {
@@ -103,21 +90,26 @@ class App extends Component {
     return (
       <div className="App" >
         <header className="App-header">
-          <h2>Musication</h2>
-          <p> You can upload mp3s here </p>
-          <br></br>
-          <FilePond allowMultiple={true} maxFiles={3} allowRevert={false}
-          dropOnPage={true} onaddfile={this.handlePondFile}/>
-          <button onClick={this.uploadFile}>Upload</button>
-        </header>
+          <h1 className="App-title">Musication</h1>
+          a Web app for creating and streaming mappings of music to location.
+          </header>
+
+        <p className="App-intro">
+        <br></br>
+        You can upload mp3s here
+        <br></br>
+        <input type="file" onChange={this.chooseFile}/>
+        <button onClick={this.uploadFile}>Upload</button>
+        <br></br><br></br>
+        </p>
+
         <p>
+        Here are some test buttons:
+        <br></br>
           <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
           <button onClick={this.listQuery}>GraphQL List Query</button>
           <button onClick={this.todoMutation}>GraphQL addMapping Mutation</button>
         </p>
-
-        <S3Album level="protected" path='' />
-
       </div>
     );
   }
