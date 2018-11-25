@@ -7,7 +7,7 @@ import { withAuthenticator, S3Album } from 'aws-amplify-react';
 
 
 Amplify.configure(aws_exports);
-Storage.configure({ level: 'private' });
+Storage.configure({ level: 'protected' });
 
 class App extends Component {
   uploadFile = (evt) => {
@@ -26,7 +26,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+	    <h2> Musication </h2>
+	    <p> You can upload mp3s below </p>
         </header>
 	<p> Pick a file</p>
           <input type="file" onChange={this.uploadFile} />
