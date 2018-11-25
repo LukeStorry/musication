@@ -12,7 +12,10 @@ const awsmobile =  {
     "aws_mobile_analytics_app_id": "aa3d695eb3b34874b086530d20f6dbf9",
     "aws_mobile_analytics_app_region": "us-east-1",
     "aws_user_files_s3_bucket": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
-    "aws_user_files_s3_bucket_region": "eu-west-1"
+    "aws_user_files_s3_bucket_region": "eu-west-1",
+    "aws_appsync_graphqlEndpoint": "https://5snuzh7edff7fnkd2mml3ixhru.appsync-api.eu-west-1.amazonaws.com/graphql",
+    "aws_appsync_region": "eu-west-1",
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
 };
 
 

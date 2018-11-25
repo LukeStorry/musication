@@ -166,6 +166,25 @@
 					"unauthPermissions": ""
 				}
 			}
+		},
+		"apimusicationgraphql": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"Parameters": {
+					"AppSyncApiName": "musicationgraphql",
+					"AuthCognitoUserPoolId": {
+						"Fn::GetAtt": [
+							"authcognito61b3b7b8",
+							"Outputs.UserPoolId"
+						]
+					},
+					"schemaGraphql": "s3://musicationweb-20181125164603-deployment/amplify-appsync-files/schema.graphql.1543176576022",
+					"ResolverBucket": "musicationweb-20181125164603-deployment",
+					"ResolverRootKey": "amplify-appsync-files",
+					"DeploymentTimestamp": "1543176576022"
+				}
+			}
 		}
 	},
 	"Outputs": {

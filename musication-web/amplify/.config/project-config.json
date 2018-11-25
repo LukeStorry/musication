@@ -1,9 +1,9 @@
 {
     "projectName": "musicationweb",
-    "projectPath": "/home/abdu/Documents/musication/musication-web",
-    "defaultEditor": "none",
+    "projectPath": "/mnt/c/Users/Luke/Documents/GitHub/musication/musication-web",
+    "defaultEditor": "atom",
     "frontendHandler": {
-        "javascript": "/usr/lib/node_modules/@aws-amplify/cli/node_modules/amplify-frontend-javascript"
+        "javascript": "/home/luke/.nvm/versions/node/v8.11.3/lib/node_modules/@aws-amplify/cli/node_modules/amplify-frontend-javascript"
     },
     "javascript": {
         "framework": "react",
@@ -15,6 +15,6 @@
         }
     },
     "providers": {
-        "awscloudformation": "/usr/lib/node_modules/@aws-amplify/cli/node_modules/amplify-provider-awscloudformation"
+        "awscloudformation": "/home/luke/.nvm/versions/node/v8.11.3/lib/node_modules/@aws-amplify/cli/node_modules/amplify-provider-awscloudformation"
     }
 }
