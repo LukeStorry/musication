@@ -3,6 +3,8 @@ import './App.css';
 import aws_exports from './aws-exports';
 import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
 import { withAuthenticator, S3Album } from 'aws-amplify-react';
+import { FilePond, File, registerPlugin } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
 
 
 Amplify.configure(aws_exports);
@@ -43,14 +45,26 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { file: null };
+  }
 
+  listUploadedFiles = () => {
     Storage.list('', { level: 'protected' })
     .then(result => console.log(result));
   }
 
-  chooseFile = (evt) => {
-    const chosen = evt.target.files[0];
-    this.setState({file: chosen});
+
+  // const pond = document.querySelector('.filepond--root');
+  // pond.addEventListener('FilePond:addfile', e => {
+  //     console.log('File added', e.detail);
+  // });
+//   pond.addEventListener('FilePond:addfile', e => {
+//     console.log('File added', e.detail);
+// });
+  handlePondFile = (err, chosenFile) => {
+    if (err) {
+      console.log(err);
+    }
+    this.setState({file: chosenFile});
   }
 
   uploadFile = () => {
@@ -92,12 +106,14 @@ class App extends Component {
           <h2>Musication</h2>
           <p> You can upload mp3s here </p>
           <br></br>
-          <input type="file" onChange={this.chooseFile}/>
+          <FilePond allowMultiple={true} maxFiles={3} allowRevert={false}
+          dropOnPage={true} onaddfile={this.handlePondFile}/>
           <button onClick={this.uploadFile}>Upload</button>
         </header>
         <p>
-          <button onClick={this.listQuery}>Test - GraphQL List Query</button>
-          <button onClick={this.todoMutation}>Test - GraphQL addMapping Mutation</button>
+          <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
+          <button onClick={this.listQuery}>GraphQL List Query</button>
+          <button onClick={this.todoMutation}>GraphQL addMapping Mutation</button>
         </p>
 
         <S3Album level="protected" path='' />
