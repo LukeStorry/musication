@@ -10,9 +10,17 @@ Output: Music streaming based on GPS
 
 
 
+---
 
+## Usage
+Once the repo is cloned, run:
 
-
+```bash
+npm install -g @aws-amplify/cli
+amplify configure
+npm install
+amplify configure project
+```
 ---
 
 *Created for the COMSM0010 - Cloud Computing Coursework Project*

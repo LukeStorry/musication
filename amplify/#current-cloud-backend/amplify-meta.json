@@ -1,107 +1,107 @@
 {
-	"providers": {
-		"awscloudformation": {
-			"AuthRoleName": "musicationweb-20181125164603-authRole",
-			"UnauthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-unauthRole",
-			"AuthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-authRole",
-			"Region": "eu-west-1",
-			"DeploymentBucketName": "musicationweb-20181125164603-deployment",
-			"UnauthRoleName": "musicationweb-20181125164603-unauthRole",
-			"StackName": "musicationweb-20181125164603",
-			"StackId": "arn:aws:cloudformation:eu-west-1:991639282145:stack/musicationweb-20181125164603/9a04ff50-f0d1-11e8-9d10-02761942ff2c"
-		}
-	},
-	"hosting": {
-		"S3AndCloudFront": {
-			"service": "S3AndCloudFront",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/hosting/template.json",
-				"logicalId": "hostingS3AndCloudFront"
-			},
-			"lastPushTimeStamp": "2018-11-25T20:12:01.487Z",
-			"output": {
-				"S3BucketSecureURL": "https://musicationweb-20181125164655--hostingbucket.s3.amazonaws.com",
-				"WebsiteURL": "http://musicationweb-20181125164655--hostingbucket.s3-website-eu-west-1.amazonaws.com",
-				"Region": "eu-west-1",
-				"HostingBucketName": "musicationweb-20181125164655--hostingbucket"
-			},
-			"lastPushDirHash": "qVEzyTpLGsgj2Rngs8tIp3LMVsQ="
-		}
-	},
-	"auth": {
-		"cognito61b3b7b8": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/auth/cognito61b3b7b8-cloudformation-template.yml",
-				"logicalId": "authcognito61b3b7b8"
-			},
-			"lastPushTimeStamp": "2018-11-25T20:12:01.498Z",
-			"output": {
-				"AppClientSecret": "1egu7ulksrga9qvs90ufg67ciqi0olvmcksjt7r20ueqcaqj136p",
-				"UserPoolId": "eu-west-1_EAycu9rvO",
-				"AppClientIDWeb": "361gd2a98kstufl48prf10qqu2",
-				"AppClientID": "7olm09ran2i3lmj0c7qp7i01u3",
-				"IdentityPoolId": "eu-west-1:42358ee2-9410-46bd-9f9a-e2f3fe8dc79b",
-				"IdentityPoolName": "cognito61b3b7b8_identitypool_61b3b7b8",
-				"UserPoolName": "cognito61b3b7b8_userpool_61b3b7b8"
-			},
-			"lastPushDirHash": "jjazvgqLct5ka04WLgPe9iSTfpw="
-		}
-	},
-	"analytics": {
-		"musicationweb": {
-			"service": "Pinpoint",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
-				"logicalId": "analyticsmusicationweb"
-			},
-			"lastPushTimeStamp": "2018-11-25T20:12:01.505Z",
-			"output": {
-				"appName": "musicationweb",
-				"Region": "us-east-1",
-				"Id": "aa3d695eb3b34874b086530d20f6dbf9"
-			},
-			"lastPushDirHash": "M3g0r9XaCCrIvxAasxvoz9Pn/9w="
-		}
-	},
-	"storage": {
-		"mp3s": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
-				"logicalId": "storagemp3s"
-			},
-			"lastPushTimeStamp": "2018-11-25T20:12:01.516Z",
-			"output": {
-				"BucketName": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
-				"Region": "eu-west-1"
-			},
-			"lastPushDirHash": "uV3DbXMB48QnXMEGJ2UIuFYJR4w="
-		}
-	},
-	"api": {
-		"musicationgraphql": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"securityType": "AMAZON_COGNITO_USER_POOLS",
-				"GraphQLAPIIdOutput": "erse4uzigzeszpndgdjid2fvoa",
-				"GraphQLAPIEndpointOutput": "https://5snuzh7edff7fnkd2mml3ixhru.appsync-api.eu-west-1.amazonaws.com/graphql",
-				"GraphQLAPIKeyOutput": "da2-iusmh5rysbef5h3hl5gj4nc37q",
-				"AuthCognitoUserPoolIdOutput": "eu-west-1_EAycu9rvO",
-				"AuthCognitoUserPoolNativeClientId": "See UserPool: eu-west-1_EAycu9rvO",
-				"AuthCognitoUserPoolJSClientId": "See UserPool: eu-west-1_EAycu9rvO"
-			},
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-				"logicalId": "apimusicationgraphql"
-			},
-			"lastPushTimeStamp": "2018-11-25T20:12:02.775Z",
-			"lastPushDirHash": "jLUOQWBCrUZ2+BI2Y5R+oyKqJjM="
-		}
-	}
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "musicationweb-20181125164603-authRole",
+            "UnauthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "musicationweb-20181125164603-deployment",
+            "UnauthRoleName": "musicationweb-20181125164603-unauthRole",
+            "StackName": "musicationweb-20181125164603",
+            "StackId": "arn:aws:cloudformation:eu-west-1:991639282145:stack/musicationweb-20181125164603/9a04ff50-f0d1-11e8-9d10-02761942ff2c"
+        }
+    },
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/hosting/template.json",
+                "logicalId": "hostingS3AndCloudFront"
+            },
+            "lastPushTimeStamp": "2018-11-25T20:12:01.487Z",
+            "output": {
+                "S3BucketSecureURL": "https://musicationweb-20181125164655--hostingbucket.s3.amazonaws.com",
+                "WebsiteURL": "http://musicationweb-20181125164655--hostingbucket.s3-website-eu-west-1.amazonaws.com",
+                "Region": "eu-west-1",
+                "HostingBucketName": "musicationweb-20181125164655--hostingbucket"
+            },
+            "lastPushDirHash": "qVEzyTpLGsgj2Rngs8tIp3LMVsQ="
+        }
+    },
+    "auth": {
+        "cognito61b3b7b8": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/auth/cognito61b3b7b8-cloudformation-template.yml",
+                "logicalId": "authcognito61b3b7b8"
+            },
+            "lastPushTimeStamp": "2018-11-25T20:12:01.498Z",
+            "output": {
+                "AppClientSecret": "1egu7ulksrga9qvs90ufg67ciqi0olvmcksjt7r20ueqcaqj136p",
+                "UserPoolId": "eu-west-1_EAycu9rvO",
+                "AppClientIDWeb": "361gd2a98kstufl48prf10qqu2",
+                "AppClientID": "7olm09ran2i3lmj0c7qp7i01u3",
+                "IdentityPoolId": "eu-west-1:42358ee2-9410-46bd-9f9a-e2f3fe8dc79b",
+                "IdentityPoolName": "cognito61b3b7b8_identitypool_61b3b7b8",
+                "UserPoolName": "cognito61b3b7b8_userpool_61b3b7b8"
+            },
+            "lastPushDirHash": "jjazvgqLct5ka04WLgPe9iSTfpw="
+        }
+    },
+    "analytics": {
+        "musicationweb": {
+            "service": "Pinpoint",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+                "logicalId": "analyticsmusicationweb"
+            },
+            "lastPushTimeStamp": "2018-11-25T20:12:01.505Z",
+            "output": {
+                "appName": "musicationweb",
+                "Region": "us-east-1",
+                "Id": "aa3d695eb3b34874b086530d20f6dbf9"
+            },
+            "lastPushDirHash": "M3g0r9XaCCrIvxAasxvoz9Pn/9w="
+        }
+    },
+    "storage": {
+        "mp3s": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+                "logicalId": "storagemp3s"
+            },
+            "lastPushTimeStamp": "2018-11-25T20:12:01.516Z",
+            "output": {
+                "BucketName": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
+                "Region": "eu-west-1"
+            },
+            "lastPushDirHash": "uV3DbXMB48QnXMEGJ2UIuFYJR4w="
+        }
+    },
+    "api": {
+        "musicationgraphql": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "securityType": "AMAZON_COGNITO_USER_POOLS",
+                "GraphQLAPIIdOutput": "erse4uzigzeszpndgdjid2fvoa",
+                "GraphQLAPIEndpointOutput": "https://5snuzh7edff7fnkd2mml3ixhru.appsync-api.eu-west-1.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-iusmh5rysbef5h3hl5gj4nc37q",
+                "AuthCognitoUserPoolIdOutput": "eu-west-1_EAycu9rvO",
+                "AuthCognitoUserPoolNativeClientId": "See UserPool: eu-west-1_EAycu9rvO",
+                "AuthCognitoUserPoolJSClientId": "See UserPool: eu-west-1_EAycu9rvO"
+            },
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apimusicationgraphql"
+            },
+            "lastPushTimeStamp": "2018-11-25T20:12:02.775Z",
+            "lastPushDirHash": "jLUOQWBCrUZ2+BI2Y5R+oyKqJjM="
+        }
+    }
 }

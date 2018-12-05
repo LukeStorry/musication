@@ -1,5 +1,9 @@
-amplify/.config/aws-info.json
-amplify/.config/project-config.json
+#awsamplifyjs
+
+amplify/\#current-cloud-backend/
+aws-info.json
+project-config.json
+aws-exports.*
 
 # dependencies
 /node_modules
