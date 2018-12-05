@@ -1,7 +1,0 @@
-type Mapping @model {
-  name: String!
-  author: String!
-  description: String
-  mp3s:[String]!
-  locations:[String]!
-}
