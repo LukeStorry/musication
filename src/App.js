@@ -44,9 +44,16 @@ class App extends Component {
     this.state = { file: null };
   }
 
+  printMp3URL = (key) => {
+    Storage.get(key, { level: 'protected' })
+    .then(result => console.log(result))
+  }
+
+
   listUploadedFiles = () => {
     Storage.list('', { level: 'protected' })
-    .then(result => console.log(result));
+    .then(result => this.printMp3URL(result[1].key));
+
   }
 
   chooseFile = (evt) => {
