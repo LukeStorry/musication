@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
-import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
+import Amplify, { Analytics, Storage, API} from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
 
 Amplify.configure(aws_exports);
@@ -44,12 +44,14 @@ class App extends Component {
     this.state = { file: null };
   }
 
+
   printMp3URL = (key) => {
     Storage.get(key, { level: 'protected' })
     .then(result => console.log(result))
   }
 
 
+// File uploading stuff
   listUploadedFiles = () => {
     Storage.list('', { level: 'protected' })
     .then(result => this.printMp3URL(result[1].key));
@@ -69,28 +71,32 @@ class App extends Component {
     Storage.put(name, file).then(this.setState({file: null}));
   }
 
-  componentDidMount() {
-    Analytics.record('Amplify_CLI');
-  }
 
-  mappingMutation = async () => {
-    const mappingDetails = {
-      name: 'My First MusicMapping',
-      author: 'luke',
-      description: 'test mapping',
-      mp3s: ['mp31.mp3', 'mp32.mp3'],
-      locations: ['1243.56,12535.67', '1243.65,12345.87']
-    };
-
-    const newEvent = await API.graphql(graphqlOperation(addMapping, mappingDetails));
-    alert(JSON.stringify(newEvent));
-  }
-
-  listQuery = async () => {
-    console.log('listing mappings');
-    const allMappings = await API.graphql(graphqlOperation(listMappings));
-    alert(JSON.stringify(allMappings));
-  }
+  // API stuff
+    post = async () => {
+      console.log('calling api');
+      var mapping = [['1.2345,6.345', 'song1'],
+                ['2.345,7.345', 'song3'],
+                ['3.2345,8.345', 'song2']];
+      const response = await API.post('restapi', '/items', {
+        body: {
+          id: '1',
+          name: 'first mapping!'
+          mapping: mapping,
+        }
+      });
+      alert(JSON.stringify(response, null, 2));
+    }
+    get = async () => {
+      console.log('calling api');
+      const response = await API.get('restapi', '/items/object/1');
+      alert(JSON.stringify(response, null, 2));
+    }
+    list = async () => {
+      console.log('calling api');
+      const response = await API.get('restapi', '/items/1');
+      alert(JSON.stringify(response, null, 2));
+    }
 
 
   render() {
@@ -100,6 +106,8 @@ class App extends Component {
           <h1 className="App-title">Musication</h1>
           a Web app for creating and streaming mappings of music to location.
           </header>
+
+
 
         <p className="App-intro">
         <br></br>
@@ -114,8 +122,9 @@ class App extends Component {
         Here are some test buttons:
         <br></br>
           <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
-          <button onClick={this.listQuery}>GraphQL List Query</button>
-          <button onClick={this.todoMutation}>GraphQL addMapping Mutation</button>
+          <button onClick={this.post}>API Post</button>
+          <button onClick={this.get}>API get</button>
+          <button onClick={this.list}>API list</button>
         </p>
       </div>
     );

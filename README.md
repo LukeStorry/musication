@@ -20,6 +20,7 @@ npm install -g @aws-amplify/cli
 amplify configure
 npm install
 amplify configure project
+amplify serve
 ```
 ---
 

@@ -166,6 +166,68 @@
 					"unauthPermissions": ""
 				}
 			}
+		},
+		"storagemappingsDB": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/mappingsDB-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "mappings",
+					"partitionKeyName": "id",
+					"partitionKeyType": "S"
+				}
+			}
+		},
+		"storagemusicmappingsDB": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/musicmappingsDB-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "musicmappingsDB",
+					"partitionKeyName": "id",
+					"partitionKeyType": "S"
+				}
+			}
+		},
+		"apirestapi": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/api/restapi-cloudformation-template.json",
+				"Parameters": {
+					"functioncrudmappingsName": {
+						"Fn::GetAtt": [
+							"functioncrudmappings",
+							"Outputs.Name"
+						]
+					},
+					"functioncrudmappingsArn": {
+						"Fn::GetAtt": [
+							"functioncrudmappings",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"functioncrudmappings": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/function/crudmappings-cloudformation-template.json",
+				"Parameters": {
+					"storagemappingsDBName": {
+						"Fn::GetAtt": [
+							"storagemappingsDB",
+							"Outputs.Name"
+						]
+					},
+					"storagemappingsDBArn": {
+						"Fn::GetAtt": [
+							"storagemappingsDB",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
 		}
 	},
 	"Outputs": {

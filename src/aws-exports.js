@@ -12,7 +12,25 @@ const awsmobile =  {
     "aws_mobile_analytics_app_id": "aa3d695eb3b34874b086530d20f6dbf9",
     "aws_mobile_analytics_app_region": "us-east-1",
     "aws_user_files_s3_bucket": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
-    "aws_user_files_s3_bucket_region": "eu-west-1"
+    "aws_user_files_s3_bucket_region": "eu-west-1",
+    "aws_dynamodb_all_tables_region": "eu-west-1",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "mappings",
+            "region": "eu-west-1"
+        },
+        {
+            "tableName": "musicmappingsDB",
+            "region": "eu-west-1"
+        }
+    ],
+    "aws_cloud_logic_custom": [
+        {
+            "name": "restapi",
+            "endpoint": "https://kwkpnjvtnk.execute-api.eu-west-1.amazonaws.com/Prod",
+            "region": "eu-west-1"
+        }
+    ]
 };
 
 
