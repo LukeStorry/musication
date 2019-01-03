@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
 import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
-import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
 import { withAuthenticator } from 'aws-amplify-react';
 import CurrentLocation from './Map';
 
 Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
+
+const mapStyles = {
+  map: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  }
+};
 
 
 const listMappings = `query listMappings {
@@ -96,26 +104,22 @@ class App extends Component {
   }
 
   state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {}
+    showingInfoWindow: false,  //Hides or the shows the infoWindow
+    activeMarker: {},          //Shows the active marker upon click
+    selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
   };
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+  onClick(t, map, coord) {
+    const { latLng } = coord;
+    const newlat = latLng.lat();
+    const newlng = latLng.lng();
+    console.log(newlat, newlng)
+    return( <Marker
+	    position={latLng}
+	    />
+    )
+  }
 
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
 
   render() {
     return (
@@ -141,18 +145,21 @@ class App extends Component {
           <button onClick={this.listQuery}>GraphQL List Query</button>
           <button onClick={this.todoMutation}>GraphQL addMapping Mutation</button>
         </p>
-	    <CurrentLocation
-        centerAroundCurrentLocation
+        <Map
         google={this.props.google}
+        zoom={14}
+	onClick={this.onClick}
+        style={mapStyles}
+        initialCenter={{
+         lat: 51.454514,
+         lng: -2.587910 
+        }}
       >
-        <Marker onClick={this.onMarkerClick} name={'current location'} />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-        </InfoWindow>
-      </CurrentLocation>
+	    <Marker
+                title={'The marker`s title will appear as a tooltip.'}
+                name={'SOMA'}
+                position={{lat: 37.778519, lng: -122.405640}} />
+	    </Map>
       </div>
     );
   }

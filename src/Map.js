@@ -88,7 +88,7 @@ export class CurrentLocation extends React.Component {
   }
 
 
-renderChildren() {
+  renderChildren() {
     const { children } = this.props;
 
     if (!children) return;
