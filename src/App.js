@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
 import Amplify, { Analytics, Storage, API, graphqlOperation} from 'aws-amplify';
+import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import { withAuthenticator } from 'aws-amplify-react';
+import CurrentLocation from './Map';
 
 Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
+
 
 const listMappings = `query listMappings {
   listMapping{
@@ -92,6 +95,27 @@ class App extends Component {
     alert(JSON.stringify(allMappings));
   }
 
+  state = {
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  };
+
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+  onClose = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
 
   render() {
     return (
@@ -117,9 +141,23 @@ class App extends Component {
           <button onClick={this.listQuery}>GraphQL List Query</button>
           <button onClick={this.todoMutation}>GraphQL addMapping Mutation</button>
         </p>
+	    <CurrentLocation
+        centerAroundCurrentLocation
+        google={this.props.google}
+      >
+        <Marker onClick={this.onMarkerClick} name={'current location'} />
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+          onClose={this.onClose}
+        >
+        </InfoWindow>
+      </CurrentLocation>
       </div>
     );
   }
 }
 
-export default withAuthenticator(App, true);
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDM6x6cs7CqMIMdVCi5thUtzj65u2IFeOo'
+})(withAuthenticator(App, true));

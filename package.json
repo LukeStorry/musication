@@ -5,10 +5,11 @@
   "dependencies": {
     "aws-amplify": "^1.1.10",
     "aws-amplify-react": "^2.1.4",
+    "google-maps-react": "^2.0.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-google-maps": "^9.4.5",
-    "react-scripts": "^2.1.1",
+    "react-scripts": "^2.1.2",
     "recompose": "^0.30.0"
   },
   "scripts": {
