@@ -1,0 +1,36 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "crudmappings",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        }
+    ],
+    "resourceName": "restapi",
+    "apiName": "musication4be53711",
+    "functionArns": [
+        {
+            "lambdaFunction": "crudmappings"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "musicationweb-20181125164603-authRole",
+        "unAuthRoleName": "musicationweb-20181125164603-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "crudmappings",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "5fc9f851"
+}

@@ -1,0 +1,5 @@
+{
+    "tableName": "musicmappingsDB",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S"
+}
