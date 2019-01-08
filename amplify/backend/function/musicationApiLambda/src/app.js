@@ -17,15 +17,11 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 let tableName = "mappings";
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "user";
 const partitionKeyType = "S";
-const sortKeyName = "";
-const sortKeyType = "";
-const hasSortKey = sortKeyName !== "";
 const path = "/mappings";
 const UNAUTH = 'UNAUTH';
-const hashKeyPath = '/:' + partitionKeyName;
-const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
+
+
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -38,33 +34,24 @@ app.use(function(req, res, next) {
   next()
 });
 
-// convert url string param to expected Type
-const convertUrlType = (param, type) => {
-  switch(type) {
-    case "N":
-      return Number.parseInt(param);
-    default:
-      return param;
-  }
-}
 
 /********************************
- * HTTP Get method for list objects *
+ * HTTP Get method for listing the mapping objects *
  ********************************/
 
-app.get(path + hashKeyPath, function(req, res) {
+app.get(path + '/:user', function(req, res) {
   var condition = {}
-  condition[partitionKeyName] = {
+  condition["user"] = {
     ComparisonOperator: 'EQ'
   }
 
   if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
+    condition["user"]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
   } else {
     try {
-      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-    } catch(err) {
-      res.json({error: 'Wrong column type ' + err});
+      condition["user"]['AttributeValueList'] = [req.params["user"]];
+    } catch (err) {
+      res.json({ error: 'Wrong column type ' + err });
     }
   }
 
@@ -75,59 +62,63 @@ app.get(path + hashKeyPath, function(req, res) {
 
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
-      res.json({error: 'Could not load items: ' + err});
+      res.json({ error: 'Could not load items: ' + err });
     } else {
       res.json(data.Items);
     }
   });
 });
 
+
 /*****************************************
- * HTTP Get method for get single object *
+ * HTTP Get method for get closest song id *
  *****************************************/
+app.get(path + '/:user/:x/:y', function(req, res) {
+  var condition = {}
+  condition["user"] = {
+    ComparisonOperator: 'EQ'
+  }
 
-app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
-  var params = {};
   if (userIdPresent && req.apiGateway) {
-    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+    condition["user"]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
   } else {
-    params[partitionKeyName] = req.params[partitionKeyName];
     try {
-      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
-    } catch(err) {
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-    } catch(err) {
-      res.json({error: 'Wrong column type ' + err});
+      condition["user"]['AttributeValueList'] = [req.params["user"]];
+    } catch (err) {
+      res.json({ error: 'Wrong column type ' + err });
     }
   }
 
-  let getItemParams = {
+  let queryParams = {
     TableName: tableName,
-    Key: params
+    KeyConditions: condition
   }
 
-  dynamodb.get(getItemParams,(err, data) => {
-    if(err) {
-      res.json({error: 'Could not load items: ' + err.message});
+  dynamodb.query(queryParams, (err, data) => {
+    if (err) {
+      res.json({ error: 'Could not load items: ' + err });
     } else {
-      if (data.Item) {
-        res.json(data.Item);
-      } else {
-        res.json(data) ;
-      }
+      var coordinates = [parseFloat(req.params.x), parseFloat(req.params.y)];
+      var chosen = { song: '', distance: Number.POSITIVE_INFINITY };
+      data.Items[0].mapping.forEach(function(mapping) {
+        var songCoordinates = mapping[0].split(',');
+        var deltax = coordinates[0] - parseFloat(songCoordinates[0]);
+        var deltay = coordinates[1] - parseFloat(songCoordinates[1]);
+        var distance = Math.pow(deltax, 2) + Math.pow(deltay, 2)
+        if (distance < chosen.distance) {
+          chosen.song = mapping[1];
+          chosen.distance = distance;
+        }
+      })
+      res.json(chosen);
     }
   });
 });
 
 
 /************************************
-* HTTP put method for insert object *
-*************************************/
+ * HTTP put method for insert object *
+ *************************************/
 
 app.put(path, function(req, res) {
 
@@ -140,16 +131,17 @@ app.put(path, function(req, res) {
     Item: req.body
   }
   dynamodb.put(putItemParams, (err, data) => {
-    if(err) {
-      res.json({error: err, url: req.url, body: req.body});
-    } else{
-      res.json({success: 'put call succeed!', url: req.url, data: data})
+    if (err) {
+      res.json({ error: err, url: req.url, body: req.body });
+    } else {
+      res.json({ success: 'put call succeed!', url: req.url, data: data })
     }
   });
 });
 
+
 app.listen(3000, function() {
-    console.log("App started")
+  console.log("App started")
 });
 
 // Export the app object. When executing the application local this does nothing. However,

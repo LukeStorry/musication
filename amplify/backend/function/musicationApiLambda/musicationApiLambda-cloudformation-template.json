@@ -27,7 +27,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "musication-20190108210510-deployment",
-					"S3Key": "amplify-builds/musicationApiLambda-1546983933-latest-build.zip"
+					"S3Key": "amplify-builds/musicationApiLambda-1546990434-latest-build.zip"
 				}
 			}
 		},
