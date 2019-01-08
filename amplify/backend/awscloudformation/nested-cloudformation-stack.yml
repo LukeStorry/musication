@@ -81,30 +81,30 @@
 		"hostingS3AndCloudFront": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/hosting/template.json",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/hosting/template.json",
 				"Parameters": {}
 			}
 		},
-		"authcognito61b3b7b8": {
+		"authcognito57e7d211": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/auth/cognito61b3b7b8-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/auth/cognito57e7d211-cloudformation-template.yml",
 				"Parameters": {
-					"identityPoolName": "cognito61b3b7b8_identitypool_61b3b7b8",
+					"identityPoolName": "cognito57e7d211_identitypool_57e7d211",
 					"allowUnauthenticatedIdentities": false,
 					"thirdPartyAuth": false,
-					"lambdaLogPolicy": "cognito61b3b7b8_lambda_log_policy",
-					"openIdLambdaRoleName": "cognito61b3b7b8_openid_lambda_role",
-					"openIdRolePolicy": "cognito61b3b7b8_openid_pass_role_policy",
-					"openIdLambdaIAMPolicy": "cognito61b3b7b8_openid_lambda_iam_policy",
-					"openIdLogPolicy": "cognito61b3b7b8_openid_lambda_log_policy",
-					"userPoolName": "cognito61b3b7b8_userpool_61b3b7b8",
+					"lambdaLogPolicy": "cognito57e7d211_lambda_log_policy",
+					"openIdLambdaRoleName": "cognito57e7d211_openid_lambda_role",
+					"openIdRolePolicy": "cognito57e7d211_openid_pass_role_policy",
+					"openIdLambdaIAMPolicy": "cognito57e7d211_openid_lambda_iam_policy",
+					"openIdLogPolicy": "cognito57e7d211_openid_lambda_log_policy",
+					"userPoolName": "cognito57e7d211_userpool_57e7d211",
 					"autoVerifiedAttributes": "email",
 					"mfaConfiguration": "OFF",
 					"mfaTypes": "SMS Text Message",
-					"roleName": "cognito61b3b7b8_sns-role",
-					"roleExternalId": "cognito61b3b7b8_role_external_id",
-					"policyName": "cognito61b3b7b8-sns-policy",
+					"roleName": "cognito57e7d211_sns-role",
+					"roleExternalId": "cognito57e7d211_role_external_id",
+					"policyName": "cognito57e7d211-sns-policy",
 					"smsAuthenticationMessage": "Your authentication code is {####}",
 					"smsVerificationMessage": "Your verification code is {####}",
 					"emailVerificationSubject": "Your verification code",
@@ -113,116 +113,88 @@
 					"passwordPolicyMinLength": 8,
 					"passwordPolicyCharacters": "Requires Lowercase,Requires Uppercase,Requires Numbers,Requires Symbols",
 					"requiredAttributes": "email",
-					"userpoolClientName": "cognito61b3b7b8_app_client",
+					"userpoolClientName": "cognito57e7d211_app_client",
 					"userpoolClientGenerateSecret": true,
 					"userpoolClientRefreshTokenValidity": 30,
 					"userpoolClientReadAttributes": "email",
-					"mfaLambdaRole": "cognito61b3b7b8_totp_lambda_role",
-					"mfaLambdaLogPolicy": "cognito61b3b7b8_totp_lambda_log_policy",
-					"mfaPassRolePolicy": "cognito61b3b7b8_totp_pass_role_policy",
-					"mfaLambdaIAMPolicy": "cognito61b3b7b8_totp_lambda_iam_policy",
-					"userpoolClientLambdaRole": "cognito61b3b7b8_userpoolclient_lambda_role",
-					"userpoolClientLogPolicy": "cognito61b3b7b8_userpoolclient_lambda_log_policy",
-					"userpoolClientLambdaPolicy": "cognito61b3b7b8_userpoolclient_lambda_iam_policy",
+					"mfaLambdaRole": "cognito57e7d211_totp_lambda_role",
+					"mfaLambdaLogPolicy": "cognito57e7d211_totp_lambda_log_policy",
+					"mfaPassRolePolicy": "cognito57e7d211_totp_pass_role_policy",
+					"mfaLambdaIAMPolicy": "cognito57e7d211_totp_lambda_iam_policy",
+					"userpoolClientLambdaRole": "cognito57e7d211_userpoolclient_lambda_role",
+					"userpoolClientLogPolicy": "cognito57e7d211_userpoolclient_lambda_log_policy",
+					"userpoolClientLambdaPolicy": "cognito57e7d211_userpoolclient_lambda_iam_policy",
 					"userpoolClientSetAttributes": false,
 					"useDefault": "default",
-					"unAuthRoleName": "musicationweb-20181125164603-unauthRole",
-					"authRoleName": "musicationweb-20181125164603-authRole",
-					"unAuthRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-unauthRole",
-					"authRoleArn": "arn:aws:iam::991639282145:role/musicationweb-20181125164603-authRole",
-					"resourceName": "cognito61b3b7b8",
+					"unAuthRoleName": "musication-20190108210510-unauthRole",
+					"authRoleName": "musication-20190108210510-authRole",
+					"unAuthRoleArn": "arn:aws:iam::991639282145:role/musication-20190108210510-unauthRole",
+					"authRoleArn": "arn:aws:iam::991639282145:role/musication-20190108210510-authRole",
+					"resourceName": "cognito57e7d211",
 					"authSelections": "identityPoolAndUserPool"
 				}
 			}
 		},
-		"analyticsmusicationweb": {
+		"storagemp3bucket": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
 				"Parameters": {
-					"appName": "musicationweb",
-					"roleName": "pinpointLambdaRolec33090ff",
-					"cloudWatchPolicyName": "cloudWatchPolicyc33090ff",
-					"pinpointPolicyName": "pinpointPolicyc33090ff",
-					"authPolicyName": "pinpoint_amplify_c33090ff",
-					"unauthPolicyName": "pinpoint_amplify_c33090ff",
-					"authRoleName": "musicationweb-20181125164603-authRole",
-					"unauthRoleName": "musicationweb-20181125164603-unauthRole",
-					"IAMPrefix": "991639282145"
-				}
-			}
-		},
-		"storagemp3s": {
-			"Type": "AWS::CloudFormation::Stack",
-			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
-				"Parameters": {
-					"bucketName": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
-					"authPolicyName": "s3_amplify_c639e6d8",
-					"unauthPolicyName": "s3_amplify_c639e6d8",
-					"authRoleName": "musicationweb-20181125164603-authRole",
-					"unauthRoleName": "musicationweb-20181125164603-unauthRole",
+					"bucketName": "musication-mp3s",
+					"authPolicyName": "s3_amplify_3076d136",
+					"unauthPolicyName": "s3_amplify_3076d136",
+					"authRoleName": "musication-20190108210510-authRole",
+					"unauthRoleName": "musication-20190108210510-unauthRole",
 					"authPermissions": "rw",
 					"unauthPermissions": ""
 				}
 			}
 		},
-		"storagemappingsDB": {
+		"storagemusicationMappingsDB": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/mappingsDB-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/storage/musicationMappingsDB-cloudformation-template.json",
 				"Parameters": {
 					"tableName": "mappings",
-					"partitionKeyName": "id",
+					"partitionKeyName": "user",
 					"partitionKeyType": "S"
 				}
 			}
 		},
-		"storagemusicmappingsDB": {
+		"functionmusicationApiLambda": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/storage/musicmappingsDB-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/function/musicationApiLambda-cloudformation-template.json",
 				"Parameters": {
-					"tableName": "musicmappingsDB",
-					"partitionKeyName": "id",
-					"partitionKeyType": "S"
-				}
-			}
-		},
-		"apirestapi": {
-			"Type": "AWS::CloudFormation::Stack",
-			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/api/restapi-cloudformation-template.json",
-				"Parameters": {
-					"functioncrudmappingsName": {
+					"storagemusicationMappingsDBName": {
 						"Fn::GetAtt": [
-							"functioncrudmappings",
+							"storagemusicationMappingsDB",
 							"Outputs.Name"
 						]
 					},
-					"functioncrudmappingsArn": {
+					"storagemusicationMappingsDBArn": {
 						"Fn::GetAtt": [
-							"functioncrudmappings",
+							"storagemusicationMappingsDB",
 							"Outputs.Arn"
 						]
 					}
 				}
 			}
 		},
-		"functioncrudmappings": {
+		"apimusicationApi": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/musicationweb-20181125164603-deployment/amplify-cfn-templates/function/crudmappings-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/musication-20190108210510-deployment/amplify-cfn-templates/api/musicationApi-cloudformation-template.json",
 				"Parameters": {
-					"storagemappingsDBName": {
+					"functionmusicationApiLambdaName": {
 						"Fn::GetAtt": [
-							"storagemappingsDB",
+							"functionmusicationApiLambda",
 							"Outputs.Name"
 						]
 					},
-					"storagemappingsDBArn": {
+					"functionmusicationApiLambdaArn": {
 						"Fn::GetAtt": [
-							"storagemappingsDB",
+							"functionmusicationApiLambda",
 							"Outputs.Arn"
 						]
 					}

@@ -2,32 +2,26 @@
 
 const awsmobile =  {
     "aws_project_region": "eu-west-1",
-    "aws_content_delivery_bucket": "musicationweb-20181125164655--hostingbucket",
+    "aws_content_delivery_bucket": "musication-hosting",
     "aws_content_delivery_bucket_region": "eu-west-1",
-    "aws_content_delivery_url": "http://musicationweb-20181125164655--hostingbucket.s3-website-eu-west-1.amazonaws.com",
-    "aws_cognito_identity_pool_id": "eu-west-1:42358ee2-9410-46bd-9f9a-e2f3fe8dc79b",
+    "aws_content_delivery_url": "https://d312rk7qk4a72n.cloudfront.net",
+    "aws_cognito_identity_pool_id": "eu-west-1:fe339e6f-ba4d-49c4-a0af-2f4aa3828f41",
     "aws_cognito_region": "eu-west-1",
-    "aws_user_pools_id": "eu-west-1_EAycu9rvO",
-    "aws_user_pools_web_client_id": "361gd2a98kstufl48prf10qqu2",
-    "aws_mobile_analytics_app_id": "aa3d695eb3b34874b086530d20f6dbf9",
-    "aws_mobile_analytics_app_region": "us-east-1",
-    "aws_user_files_s3_bucket": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
+    "aws_user_pools_id": "eu-west-1_tfme2LnVF",
+    "aws_user_pools_web_client_id": "107dseo3ul0hrjqo2h9rp8ertk",
+    "aws_user_files_s3_bucket": "musication-mp3s",
     "aws_user_files_s3_bucket_region": "eu-west-1",
     "aws_dynamodb_all_tables_region": "eu-west-1",
     "aws_dynamodb_table_schemas": [
         {
             "tableName": "mappings",
             "region": "eu-west-1"
-        },
-        {
-            "tableName": "musicmappingsDB",
-            "region": "eu-west-1"
         }
     ],
     "aws_cloud_logic_custom": [
         {
-            "name": "restapi",
-            "endpoint": "https://kwkpnjvtnk.execute-api.eu-west-1.amazonaws.com/Prod",
+            "name": "musicationApi",
+            "endpoint": "https://v6311atj7a.execute-api.eu-west-1.amazonaws.com/Prod",
             "region": "eu-west-1"
         }
     ]

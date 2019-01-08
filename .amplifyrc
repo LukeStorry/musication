@@ -1,14 +1,14 @@
 {
     "providers": {
         "awscloudformation": {
-            "AuthRoleName": "musication-20181205151635-authRole",
-            "UnauthRoleArn": "arn:aws:iam::991639282145:role/musication-20181205151635-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::991639282145:role/musication-20181205151635-authRole",
+            "AuthRoleName": "musication-20190108210510-authRole",
+            "UnauthRoleArn": "arn:aws:iam::991639282145:role/musication-20190108210510-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::991639282145:role/musication-20190108210510-authRole",
             "Region": "eu-west-1",
-            "DeploymentBucketName": "musication-20181205151635-deployment",
-            "UnauthRoleName": "musication-20181205151635-unauthRole",
-            "StackName": "musication-20181205151635",
-            "StackId": "arn:aws:cloudformation:eu-west-1:991639282145:stack/musication-20181205151635/c2b83cb0-f8a0-11e8-bc17-065d51fe97c8"
+            "DeploymentBucketName": "musication-20190108210510-deployment",
+            "UnauthRoleName": "musication-20190108210510-unauthRole",
+            "StackName": "musication-20190108210510",
+            "StackId": "arn:aws:cloudformation:eu-west-1:991639282145:stack/musication-20190108210510/155af2c0-1389-11e9-b64b-0a0c5b3ce4f4"
         }
     }
 }

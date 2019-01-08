@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/mappings",
+            "lambdaFunction": "musicationApiLambda",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "musicationApi",
+    "apiName": "musication34b8a34f",
+    "functionArns": [
+        {
+            "lambdaFunction": "musicationApiLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "musication-20190108210510-authRole",
+        "unAuthRoleName": "musication-20190108210510-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "musicationApiLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

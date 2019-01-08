@@ -1,0 +1,9 @@
+{
+    "bucketName": "musication-mp3s",
+    "authPolicyName": "s3_amplify_3076d136",
+    "unauthPolicyName": "s3_amplify_3076d136",
+    "authRoleName": "musication-20190108210510-authRole",
+    "unauthRoleName": "musication-20190108210510-unauthRole",
+    "authPermissions": "rw",
+    "unauthPermissions": ""
+}

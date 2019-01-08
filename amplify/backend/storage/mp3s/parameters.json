@@ -1,9 +1,0 @@
-{
-    "bucketName": "musicationweb716a9f6b15d04291bd53751b3bde88fd",
-    "authPolicyName": "s3_amplify_c639e6d8",
-    "unauthPolicyName": "s3_amplify_c639e6d8",
-    "authRoleName": "musicationweb-20181125164603-authRole",
-    "unauthRoleName": "musicationweb-20181125164603-unauthRole",
-    "authPermissions": "rw",
-    "unauthPermissions": ""
-}
