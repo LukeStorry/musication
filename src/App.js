@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 import aws_exports from './aws-exports';
-import Amplify, { Auth, Storage, API } from 'aws-amplify';
+import Amplify, {Auth, Storage, API} from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
+import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
+import CurrentLocation from './Map';
+
 Amplify.configure(aws_exports);
-Storage.configure({ level: 'protected' });
+Storage.configure({level: 'protected'});
+
+
+const mapStyles = {
+  map: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  }
+};
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { file: null };
   }
-
 
   printMp3URL = () => {
     Storage.list('', { level: 'protected' })
@@ -86,6 +97,22 @@ class App extends Component {
   }
 
 
+  state = {
+    showingInfoWindow: false, //Hides or the shows the infoWindow
+    activeMarker: {}, //Shows the active marker upon click
+    selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
+  };
+
+  onClick(t, map, coord) {
+    const { latLng } = coord;
+    const newlat = latLng.lat();
+    const newlng = latLng.lng();
+    console.log(newlat, newlng)
+    return ( < Marker position = { latLng }
+      />
+    )
+  }
+
   render() {
     return (
       <div className="App" >
@@ -93,8 +120,6 @@ class App extends Component {
           <h1 className="App-title">Musication</h1>
           a Web app for creating and streaming mappings of music to location.
           </header>
-
-
 
         <p className="App-intro">
         <br></br>
@@ -108,15 +133,33 @@ class App extends Component {
         <p>
         Here are some test buttons:
         <br></br>
-          <button onClick={this.printMp3URL}>Log url of first uploaded file to console</button>
-          <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
-          <button onClick={this.getAll}>API getAll</button>
-          <button onClick={this.closestSong}>API get closest</button>
-          <button onClick={this.put}>API put</button>
+        <button onClick={this.printMp3URL}>Log url of first uploaded file to console</button>
+        <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
+        <button onClick={this.getAll}>API getAll</button>
+        <button onClick={this.closestSong}>API get closest</button>
+        <button onClick={this.put}>API put</button>
         </p>
+        <Map
+        google={this.props.google}
+        zoom={14}
+	      onClick={this.onClick}
+        style={mapStyles}
+        initialCenter={{
+         lat: 51.454514,
+         lng: -2.587910
+        }}
+      >
+	    <Marker
+                title={'The marker`s title will appear as a tooltip.'}
+                name={'SOMA'}
+                position={{lat: 37.778519, lng: -122.405640}} />
+	    </Map>
       </div>
+      
     );
   }
 }
 
-export default withAuthenticator(App, true);
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDM6x6cs7CqMIMdVCi5thUtzj65u2IFeOo'
+})(withAuthenticator(App, true));
