@@ -21,22 +21,38 @@ const mapStyles = {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { file: null };
+    this.state = {
+      file: null,
+      mp3s:[],
+      showingInfoWindow: false, //Hides or the shows the infoWindow
+      activeMarker: {}, //Shows the active marker upon click
+      selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
+    };
   }
+
+  // get list of mp3s
+  updateMP3sList = () => {
+    Storage.list('', { level: 'protected' })
+      .then(result => {
+        var  mp3list = []
+        result.map((obj) => (mp3list.push(obj.key)));
+        this.setState({mp3s: mp3list})
+      })
+  }
+  setSelectedMp3 = (result) => {
+    function setterFunc (parent) {
+      console.log(result.mp3)
+      // parent.setState({selectedMP3 : result.mp3})
+    }
+    return setterFunc
+  }
+
 
   printMp3URL = () => {
     Storage.list('', { level: 'protected' })
       .then(result => Storage.get(result[0].key, { level: 'protected' }))
       .then(url => console.log(url));
   }
-
-
-  // File uploading stuff
-  listUploadedFiles = () => {
-    Storage.list('', { level: 'protected' })
-      .then(result => console.log(result));
-  }
-
 
   chooseFile = (evt) => {
     const chosen = evt.target.files[0];
@@ -96,13 +112,6 @@ class App extends Component {
       });
   }
 
-
-  state = {
-    showingInfoWindow: false, //Hides or the shows the infoWindow
-    activeMarker: {}, //Shows the active marker upon click
-    selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
-  };
-
   onClick(t, map, coord) {
     const { latLng } = coord;
     const newlat = latLng.lat();
@@ -114,6 +123,7 @@ class App extends Component {
   }
 
   render() {
+    this.updateMP3sList();
     return (
       <div className="App" >
         <header className="App-header">
@@ -134,11 +144,20 @@ class App extends Component {
         Here are some test buttons:
         <br></br>
         <button onClick={this.printMp3URL}>Log url of first uploaded file to console</button>
-        <button onClick={this.listUploadedFiles}>Log uploaded files to console</button>
         <button onClick={this.getAll}>API getAll</button>
         <button onClick={this.closestSong}>API get closest</button>
         <button onClick={this.put}>API put</button>
         </p>
+        <p>
+        <tbody>
+          {
+            this.state.mp3s.map((mp3) => {
+              return <button onClick={this.setSelectedMp3({mp3})}> {mp3} </button>
+            })
+          }
+        </tbody>
+        </p>
+
         <Map
         google={this.props.google}
         zoom={14}
@@ -154,11 +173,11 @@ class App extends Component {
                 name={'SOMA'}
                 position={{lat: 37.778519, lng: -122.405640}} />
 	    </Map>
-      </div>
-      
+
+    </div>
     );
-  }
-}
+  };
+ }
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyDM6x6cs7CqMIMdVCi5thUtzj65u2IFeOo'
