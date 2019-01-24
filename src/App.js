@@ -8,19 +8,8 @@ import CurrentLocation from './map.js';
 
 
 
-/*import {
-    Player,
-    MediaStates
-} from 'react-native-audio-toolkit';*/
-
-
 Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
-
-//const play = require('audio-play');
-//const load = require('audio-loader');
-
-//var Player = require('player');
 
 
  
