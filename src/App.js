@@ -4,10 +4,27 @@ import aws_exports from './aws-exports';
 import Amplify, {Auth, Storage, API} from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
 import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
-import CurrentLocation from './Map';
+import CurrentLocation from './map.js';
+
+
+
+/*import {
+    Player,
+    MediaStates
+} from 'react-native-audio-toolkit';*/
+
 
 Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
+
+//const play = require('audio-play');
+//const load = require('audio-loader');
+
+//var Player = require('player');
+
+
+ 
+
 
 
 const mapStyles = {
@@ -22,12 +39,28 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      play: true,
       file: null,
       mp3s:[],
       showingInfoWindow: false, //Hides or the shows the infoWindow
       activeMarker: {}, //Shows the active marker upon click
       selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
     };
+
+    this.url = "http://streaming.tdiradio.com:8000/house.mp3";
+    this.audio = new Audio(this.url);
+    this.togglePlay = this.togglePlay.bind(this);
+
+  }
+
+  togglePlay() {
+    this.audio.pause();
+    this.setState({ play: !this.state.play });
+    this.audio = new Audio(this.url);
+    this.audio.load();
+    
+    console.log(this.audio);
+    this.state.play ? this.audio.play() : this.audio.pause();
   }
 
   // get list of mp3s
@@ -39,6 +72,7 @@ class App extends Component {
         this.setState({mp3s: mp3list})
       })
   }
+
   setSelectedMp3 = (result) => {
     function setterFunc (parent) {
       console.log(result.mp3)
@@ -48,11 +82,14 @@ class App extends Component {
   }
 
 
-  printMp3URL = () => {
+  printMp3URL = async () => {
     Storage.list('', { level: 'protected' })
       .then(result => Storage.get(result[0].key, { level: 'protected' }))
-      .then(url => console.log(url));
-  }
+      .then(url => (this.url = url));
+
+      console.log("YYYYYYYXXXXXXXXX")
+      console.log(this.url)
+    }
 
   chooseFile = (evt) => {
     const chosen = evt.target.files[0];
@@ -64,7 +101,8 @@ class App extends Component {
     if (file == null) { return; }
     const name = file.name;
     Storage.put(name, file).then(this.setState({ file: null }));
-  }
+
+    }
 
   updateCurrentUsername = () => {
     Auth.currentAuthenticatedUser()
@@ -147,6 +185,7 @@ class App extends Component {
         <button onClick={this.getAll}>API getAll</button>
         <button onClick={this.closestSong}>API get closest</button>
         <button onClick={this.put}>API put</button>
+        <button onClick={this.togglePlay}>u h h h h h play a song</button>
         </p>
         <p>
         <tbody>

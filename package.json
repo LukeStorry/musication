@@ -3,11 +3,17 @@
   "version": "0.3.0",
   "private": true,
   "dependencies": {
+    "audio-loader": "^1.0.3",
+    "audio-play": "^2.2.1",
     "aws-amplify": "^1.1.10",
     "aws-amplify-react": "^2.1.4",
     "google-maps-react": "^2.0.2",
+    "musicmetadata": "^2.0.5",
+    "node-mp3-player": "file:node_modules/node-mp3-player",
+    "player": "^0.6.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-native-audio-toolkit": "^1.0.6",
     "react-scripts": "^2.1.2",
     "recompose": "^0.30.0"
   },
