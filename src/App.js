@@ -114,16 +114,19 @@ class App extends Component {
   updateClosestSongURL = async () => {
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
-        var x = 51.45593556304753; // TODO put real GPS here
-        var y = -2.602993793914834;
-        API.get('musicationApi', '/mappings/' + AuthenticatedUser.username + "/" + x + "/" + y)
-          .then(response => {
-            console.log(JSON.stringify(response));
-            Storage.get(response.song, { level: 'protected' }) // gets url of mp3
-            .then(url => this.url = url)
-          })
-          .catch(error => { console.log("ERROR:", error.response); });
+        navigator.geolocation.getCurrentPosition((position) => {
+          var lat = position.coords.latitude;
+          var long = position.coords.longitude;
+          console.log(lat, long);
+          API.get('musicationApi', '/mappings/' + AuthenticatedUser.username + "/" + lat + "/" + long)
+            .then(response => {
+              console.log(JSON.stringify(response));
+              Storage.get(response.song, { level: 'protected' }) // gets url of mp3
+              .then(url => this.url = url)
+            })
+            .catch(error => { console.log("ERROR:", error.response); });
       });
+    })
   };
 
   togglePlay() {
