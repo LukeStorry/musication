@@ -31,6 +31,7 @@ class App extends Component {
       play: true,
       file: null,
       mp3s:[],
+      mapping:[],
       showingInfoWindow: false, //Hides or the shows the infoWindow
       activeMarker: {}, //Shows the active marker upon click
       selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
@@ -45,11 +46,13 @@ class App extends Component {
         var  mp3list = []
         result.map((obj) => (mp3list.push(obj.key)));
         this.setState({mp3s: mp3list})
+
+        var mapping =[]
+        this.state.mp3s.map((mp3) => {
+          console.log(mapping);
+          mapping.push(['123.1,547.1', mp3]);})
+          this.setState({mapping:mapping})
       })
-
-    this.mapping =[['1.2345,6.345', 'Building_Blocks.mp3'],
-      ['2.345,7.345', 'Long_Stream.mp3']]    // TODO update default to download
-
   }
 
   togglePlay() {
@@ -90,14 +93,32 @@ class App extends Component {
   }
 
   // functions to use API get & put
-  getAll = async () => {
+  getMapping = async () => {
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
         API.get('musicationApi', '/mappings/' + AuthenticatedUser.username)
-          .then(response => { console.log(JSON.stringify(response)); })
+          .then(response => {
+            console.log(JSON.stringify(response));
+            this.setState({mapping:response[0].mapping});
+          })
           .catch(error => { console.log("ERROR:", error.response); });
       });
   };
+  putMapping = async () => {
+    Auth.currentAuthenticatedUser()
+      .then(AuthenticatedUser => {
+        const params = {
+          body: {
+            user: AuthenticatedUser.username,
+            mapping: this.state.mapping
+          }
+        }
+
+        API.put('musicationApi', '/mappings', params)
+          .then(response => { console.log(JSON.stringify(response)); })
+          .catch(error => { console.log("ERROR:", error.response); });
+      });
+    }
 
   playClosestSong = async () => {
     Auth.currentAuthenticatedUser()
@@ -118,21 +139,6 @@ class App extends Component {
       });
   };
 
-  putMapping = async () => {
-    Auth.currentAuthenticatedUser()
-      .then(AuthenticatedUser => {
-        const params = {
-          body: {
-            user: AuthenticatedUser.username,
-            mapping: this.mapping
-          }
-        }
-
-        API.put('musicationApi', '/mappings', params)
-          .then(response => { console.log(JSON.stringify(response)); })
-          .catch(error => { console.log("ERROR:", error.response); });
-      });
-  }
 
   onClick(t, map, coord) {
     const { latLng } = coord;
@@ -146,6 +152,7 @@ class App extends Component {
 
   render() {
     console.log(this.state.mp3s);
+    console.log(this.state.mapping);
     return (
       <div className="App" >
         <header className="App-header">
@@ -166,14 +173,13 @@ class App extends Component {
         Here are some test buttons:
         <br></br>
         <button onClick={this.printMp3URL}>Log S3 url of first uploaded file to console</button>
-        <button onClick={this.getAll}>API get & print mappings</button>
         <button onClick={this.playClosestSong}>Play closest GPS Song</button>
         <button onClick={this.togglePlay}>u h h h h h play a song</button>
         </p>
 
 
         <div>
-        {this.mapping.map((item) => {
+        {this.state.mapping.map((item) => {
           console.log(item);
           return(
             <span>
@@ -183,6 +189,7 @@ class App extends Component {
           )
         })
         }
+        <button onClick={this.getMapping}>Get previously saved Mapping from Cloud</button>
         <button onClick={this.putMapping}>Save Mapping to Cloud</button>
         </div>
 
