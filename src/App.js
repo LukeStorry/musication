@@ -30,15 +30,16 @@ class App extends Component {
     this.state = {
       play: true,
       file: null,
-      mp3s:[],
-      mapping:[],
+      mp3s:[], //stores a list of all the available mp3 keys on S3
+      mapping:[], // stores a local copy of the mapping obj
       showingInfoWindow: false, //Hides or the shows the infoWindow
       activeMarker: {}, //Shows the active marker upon click
-      selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
+      selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
+      mappingIndex:0 // remembers the next-updating index in the mapping obj
     };
 
-    // this.url = "";
-    // this.audio = new Audio(this.url);
+    this.url = "";
+    this.audio = new Audio(this.url);
     this.togglePlay = this.togglePlay.bind(this);
 
     Storage.list('', { level: 'protected' })
@@ -48,21 +49,11 @@ class App extends Component {
         this.setState({mp3s: mp3list})
 
         var mapping =[]
-        this.state.mp3s.map((mp3) => {
+        mp3list.map((mp3) => {
           console.log(mapping);
-          mapping.push(['123.1,547.1', mp3]);})
+          mapping.push(['0,0', mp3]);})
           this.setState({mapping:mapping})
       })
-  }
-
-  togglePlay() {
-    this.audio.pause();
-    this.setState({ play: !this.state.play });
-    this.audio = new Audio(this.url);
-    this.audio.load();
-
-    console.log(this.audio);
-    this.state.play ? this.audio.play() : this.audio.pause();
   }
 
   printMp3URL = async () => {
@@ -120,7 +111,7 @@ class App extends Component {
       });
     }
 
-  playClosestSong = async () => {
+  updateClosestSongURL = async () => {
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
         var x = 51.45593556304753; // TODO put real GPS here
@@ -130,21 +121,36 @@ class App extends Component {
             console.log(JSON.stringify(response));
             Storage.get(response.song, { level: 'protected' }) // gets url of mp3
             .then(url => this.url = url)
-            this.audio = new Audio(this.url);
-            this.audio.load();
-            console.log(this.audio);
-            this.audio.play()
           })
           .catch(error => { console.log("ERROR:", error.response); });
       });
   };
 
+  togglePlay() {
+    this.updateClosestSongURL();
+    this.audio.pause();
+    this.setState({ play: !this.state.play });
+    this.audio = new Audio(this.url);
+    this.audio.load();
 
-  onClick(t, map, coord) {
+    console.log(this.audio);
+    this.state.play ? this.audio.play() : this.audio.pause();
+  }
+
+
+  mapClick = (t, map, coord) => {
     const { latLng } = coord;
     const newlat = latLng.lat();
     const newlng = latLng.lng();
     console.log(newlat, newlng)
+
+    // update the locally stored mapping in a cyclic fashion
+    var newMapping = this.state.mapping;
+    newMapping[this.state.mappingIndex][0] = newlat+","+newlng;
+    var newMappingIndex = (this.state.mappingIndex + 1) % this.state.mapping.length;
+    this.setState({mapping:newMapping});
+    this.setState({mappingIndex:newMappingIndex})
+
     return ( < Marker position = { latLng }
       />
     )
@@ -158,45 +164,42 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Musication</h1>
           a Web app for creating and streaming mappings of music to location.
+          <p></p>
+          <button onClick={this.togglePlay}>u h h h h h play a song</button>
           </header>
 
         <p className="App-intro">
         <br></br>
-        You can upload mp3s here
+        <h3>You can upload mp3s here</h3>
         <br></br>
         <input type="file" onChange={this.chooseFile}/>
         <button onClick={this.uploadFile}>Upload</button>
         <br></br><br></br>
         </p>
 
-        <p>
-        Here are some test buttons:
-        <br></br>
-        <button onClick={this.printMp3URL}>Log S3 url of first uploaded file to console</button>
-        <button onClick={this.playClosestSong}>Play closest GPS Song</button>
-        <button onClick={this.togglePlay}>u h h h h h play a song</button>
-        </p>
-
-
         <div>
-        {this.state.mapping.map((item) => {
-          console.log(item);
-          return(
-            <span>
-            {item[0]} - {item[1]}
-            <br/>
-            </span>
-          )
-        })
+        <h3>You can create a new MP3:GPS mapping here</h3>
+        {
+          this.state.mapping.map((item) => {
+            console.log(item);
+            return(
+              <span>
+              {item[1]} : {item[0]}
+              <br/>
+              </span>
+            )
+          })
         }
         <button onClick={this.getMapping}>Get previously saved Mapping from Cloud</button>
         <button onClick={this.putMapping}>Save Mapping to Cloud</button>
+
         </div>
+        <p> </p>
 
         <Map
         google={this.props.google}
         zoom={14}
-	      onClick={this.onClick}
+	      onClick={this.mapClick.bind(this)}
         style={mapStyles}
         initialCenter={{
          lat: 51.454514,
