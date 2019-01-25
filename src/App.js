@@ -111,7 +111,10 @@ class App extends Component {
       });
     }
 
-  updateClosestSongURL = async () => {
+  togglePlay = async () => {
+    this.audio.pause();
+    this.setState({ play: !this.state.play });
+
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -123,22 +126,22 @@ class App extends Component {
               console.log(JSON.stringify(response));
               Storage.get(response.song, { level: 'protected' }) // gets url of mp3
               .then(url => this.url = url)
+              this.audio = new Audio(this.url);
+              this.audio.load();
+              console.log(this.audio);
+              this.state.play ? this.audio.play() : this.audio.pause();
             })
             .catch(error => { console.log("ERROR:", error.response); });
       });
     })
   };
 
-  togglePlay() {
-    this.updateClosestSongURL();
-    this.audio.pause();
-    this.setState({ play: !this.state.play });
-    this.audio = new Audio(this.url);
-    this.audio.load();
-
-    console.log(this.audio);
-    this.state.play ? this.audio.play() : this.audio.pause();
-  }
+  // togglePlay() {
+  //   this.updateClosestSongURL();
+  //   this.audio.pause();
+  //   this.setState({ play: !this.state.play });
+  //
+  // }
 
 
   mapClick = (t, map, coord) => {
@@ -168,7 +171,7 @@ class App extends Component {
           <h1 className="App-title">Musication</h1>
           a Web app for creating and streaming mappings of music to location.
           <p></p>
-          <button onClick={this.togglePlay}>u h h h h h play a song</button>
+          <button onClick={this.togglePlay}>Play/Pause</button>
           </header>
 
         <p className="App-intro">
