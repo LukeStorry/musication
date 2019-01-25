@@ -4,7 +4,7 @@ import aws_exports from './aws-exports';
 import Amplify, {Auth, Storage, API} from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
 import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
-import CurrentLocation from './map.js';
+import CurrentLocation from './Map.js';
 
 
 
@@ -12,7 +12,7 @@ Amplify.configure(aws_exports);
 Storage.configure({level: 'protected'});
 
 
- 
+
 
 
 
@@ -36,9 +36,16 @@ class App extends Component {
       selectedPlace: {} //Shows the infoWindow to the selected place upon a marker
     };
 
-    this.url = "http://streaming.tdiradio.com:8000/house.mp3";
-    this.audio = new Audio(this.url);
+    // this.url = "";
+    // this.audio = new Audio(this.url);
     this.togglePlay = this.togglePlay.bind(this);
+
+      Storage.list('', { level: 'protected' })
+        .then(result => {
+          var  mp3list = []
+          result.map((obj) => (mp3list.push(obj.key)));
+          this.setState({mp3s: mp3list})
+        })
 
   }
 
@@ -47,29 +54,10 @@ class App extends Component {
     this.setState({ play: !this.state.play });
     this.audio = new Audio(this.url);
     this.audio.load();
-    
+
     console.log(this.audio);
     this.state.play ? this.audio.play() : this.audio.pause();
   }
-
-  // get list of mp3s
-  updateMP3sList = () => {
-    Storage.list('', { level: 'protected' })
-      .then(result => {
-        var  mp3list = []
-        result.map((obj) => (mp3list.push(obj.key)));
-        this.setState({mp3s: mp3list})
-      })
-  }
-
-  setSelectedMp3 = (result) => {
-    function setterFunc (parent) {
-      console.log(result.mp3)
-      // parent.setState({selectedMP3 : result.mp3})
-    }
-    return setterFunc
-  }
-
 
   printMp3URL = async () => {
     Storage.list('', { level: 'protected' })
@@ -108,13 +96,21 @@ class App extends Component {
       });
   };
 
-  closestSong = async () => {
+  playClosestSong = async () => {
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
-        var x = 2.1;
+        var x = 2.1; // TODO put GPS here
         var y = 6.3;
         API.get('musicationApi', '/mappings/' + AuthenticatedUser.username + "/" + x + "/" + y)
-          .then(response => { console.log(JSON.stringify(response)); })
+          .then(response => {
+            console.log(JSON.stringify(response));
+            Storage.get(response.song, { level: 'protected' }) // gets url of mp3
+            .then(url => this.url = url)
+            this.audio = new Audio(this.url);
+            this.audio.load();
+            console.log(this.audio);
+            this.audio.play()
+          })
           .catch(error => { console.log("ERROR:", error.response); });
       });
   };
@@ -126,10 +122,10 @@ class App extends Component {
           body: {
             user: AuthenticatedUser.username,
             mapping: [
-              ['1.2345,6.345', 'song4'],
-              ['2.345,7.345', 'song5'],
-              ['3.2345,8.345', 'song6']
+              ['1.2345,6.345', 'Building_Blocks.mp3'],
+              ['2.345,7.345', 'Long_Stream.mp3']
             ]
+            // TODO this.mapping
           }
         }
 
@@ -150,7 +146,7 @@ class App extends Component {
   }
 
   render() {
-    this.updateMP3sList();
+    console.log(this.state.mp3s);
     return (
       <div className="App" >
         <header className="App-header">
@@ -172,19 +168,19 @@ class App extends Component {
         <br></br>
         <button onClick={this.printMp3URL}>Log url of first uploaded file to console</button>
         <button onClick={this.getAll}>API getAll</button>
-        <button onClick={this.closestSong}>API get closest</button>
+        <button onClick={this.playClosestSong}>Play closest GPS Song</button>
         <button onClick={this.put}>API put</button>
         <button onClick={this.togglePlay}>u h h h h h play a song</button>
         </p>
-        <p>
+
         <tbody>
           {
             this.state.mp3s.map((mp3) => {
-              return <button onClick={this.setSelectedMp3({mp3})}> {mp3} </button>
+              return <button onClick={console.log({mp3})}> {mp3} </button>
             })
           }
         </tbody>
-        </p>
+        
 
         <Map
         google={this.props.google}
