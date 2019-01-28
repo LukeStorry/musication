@@ -54,6 +54,7 @@ class App extends Component {
           mapping.push(['0,0', mp3]);})
           this.setState({mapping:mapping})
       })
+      this.updateClosestSongURL();
   }
 
   printMp3URL = async () => {
@@ -111,10 +112,7 @@ class App extends Component {
       });
     }
 
-  togglePlay = async () => {
-    this.audio.pause();
-    this.setState({ play: !this.state.play });
-
+  updateClosestSongURL = async () => {
     Auth.currentAuthenticatedUser()
       .then(AuthenticatedUser => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -126,22 +124,21 @@ class App extends Component {
               console.log(JSON.stringify(response));
               Storage.get(response.song, { level: 'protected' }) // gets url of mp3
               .then(url => this.url = url)
-              this.audio = new Audio(this.url);
-              this.audio.load();
-              console.log(this.audio);
-              this.state.play ? this.audio.play() : this.audio.pause();
             })
             .catch(error => { console.log("ERROR:", error.response); });
       });
     })
   };
 
-  // togglePlay() {
-  //   this.updateClosestSongURL();
-  //   this.audio.pause();
-  //   this.setState({ play: !this.state.play });
-  //
-  // }
+togglePlay() {
+  this.updateClosestSongURL();
+  this.audio.pause();
+  this.setState({ play: !this.state.play });
+  this.audio = new Audio(this.url);
+  this.audio.load();
+  console.log(this.audio);
+  this.state.play ? this.audio.play() : this.audio.pause();
+}
 
 
   mapClick = (t, map, coord) => {
